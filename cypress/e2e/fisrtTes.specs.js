@@ -1,76 +1,71 @@
 /// <reference types = "cypress"/>  
 describe( 'our first test ', () => {
+    beforeEach(() => {
+        //signin
+    cy.visit('/')
+    cy.contains('Forms').click()
+    cy.contains('Form Layouts').click()
+      })
+    
 
     it ('fist test', () => {
-
-        cy.visit('/')
-        cy.contains('Forms').click()
-        cy.contains('Form Layouts').click()
-
-
-        //find tag name **
-       cy.get('input')
-
-        // find ID** necesit llevar el # enfrente
-        cy.get('#inputEmail1')
-
-        // find by CLASS NAME siempre debe llevar un punto antes del class **
-
-        cy.get('.input-full-width')
-
-        // find atributes by name siepre debe ir dentro de brackets cuadrados
-        cy.get('[placeholder]')
-
-        // find by atribute name and value ** brackets but we have to add = "atribute"
-
-        cy.get('[placeholder="Email"]')
-
-        // find by class value goues with brackets [] and has to be full string
-        cy.get('[class="input-full-width size-medium shape-rectangle"]')
-
-        // find by tag name, atribute and value 
-        cy.get('input[placeholder="Email"]')
+                
+        //Inline form
+        cy.get('.inline-form-card > nb-card-header').should('contain.text', 'Inline form')
+        cy.get('[placeholder="Jane Doe"]').type('Juan Salinas')
+        cy.get('.form-inline > [placeholder="Email"]').type('jnslinas@gmai.com')
+        cy.get('.form-inline > nb-checkbox > .label > .custom-checkbox').click()
+        cy.get('.form-inline > .appearance-filled').click()
+         
+        //Using the Grid
+        cy.get(':nth-child(2) > :nth-child(1) > :nth-child(1) > nb-card-header').should('contain.text', 'Using the Grid')
+        cy.get('[data-cy="imputEmail1"]').type('jn23js@gmai.com')
+        cy.get('#inputPassword2').type('password1')
+        cy.get(':nth-child(1) > label > .inner-circle').click()
+        cy.get('[data-cy="submitButton"]').click()
         
-        // find by 2 different atributes just has to be on adifferent [] you can add as many atributes 
-        cy.get('[placeholder="Email"]')
-
-        // the most recommended way by cypress we can create our own IDs de estas formas se buscan TODOS los elementos en el codigo
-       
-        cy.get('#inputEmail3[class="input-full-width size-medium shape-rectangle"]')
-        cy.get('button[status="warning"]')
-        cy.get('[data-cy="check yellow"]')
-        .parents('form')
-        .find('nb-checkbox')
-        .click()
+        //Basic form
+        cy.get(':nth-child(2) > :nth-child(1) > nb-card-header').should('contain.text', 'Basic form')
+        cy.get('#exampleInputEmail1').type('username@email.com')
+        cy.get('#exampleInputPassword1').type('password')
+        cy.get(':nth-child(3) > nb-checkbox > .label > .custom-checkbox').click()
+        cy.get(':nth-child(2) > :nth-child(1) > nb-card-body > form > .appearance-filled').click()
+      
        })
+    
+    
+    it('second test', ()=>{
+
+        //Form without labels
+        cy.get(':nth-child(1) > :nth-child(2) > nb-card-header').should('contain.text', 'Form without labels')
+        cy.get(':nth-child(2) > nb-card-body > form > :nth-child(1) > .input-full-width').type('user@email.com')
+        cy.get(':nth-child(2) > nb-card-body > form > :nth-child(2) > .input-full-width').type('this is an email')
+        cy.get(':nth-child(3) > .size-medium').type('this is a message to test cypress input')
+        cy.get(':nth-child(2) > nb-card-body > form > .appearance-filled').click()
+        
+        //Block form
+        cy.get(':nth-child(2) > :nth-child(2) > nb-card-header').should('contain.text', 'Block form')
+        cy.get('#inputFirstName').type('name')
+        cy.get('#inputLastName').type('last name')
+        cy.get('#inputEmail').type('user@email.com')
+        cy.get('#inputWebsite').type('www.mywebsite.com')
+        cy.get('nb-card-body > .appearance-filled').click()
+        
+        //Horizontal form
+        cy.get(':nth-child(3) > .col-md-6 > nb-card > nb-card-header').should('contain.text', 'Horizontal form')
+        cy.get('#inputEmail3').type('user@mail.com')
+        cy.get('#inputPassword3').type('password')
+        cy.get('[data-cy="check yellow"] > nb-checkbox > .label > .custom-checkbox').click()
+        cy.get('.form-horizontal > :nth-child(4) > .offset-sm-3 > .appearance-filled').click()
+
+
+
+
+    })
 
     
 })
 
-describe( 'our second test ', () => {
-// agregando .only unicamente correra este test 
-    it.only('second test', () => {
-        cy.visit('/')
-        cy.contains('Forms').click()
-        cy.contains('Form Layouts').click()
-        
-        // al agregar data-cy + elargumento en HTML podremos incluirlo en la busqueda en braquests cuadrados []
-       cy.get('[data-cy="submitButton"]')
-       
-    
-       cy.get('.ng-tns-c7-6 > .menu-title').click()
-       cy.get(':nth-child(1) > nb-card > nb-card-body > .size-medium')
-       .click()
-       .type('May 2, 2023')
-       cy.get(':nth-child(2) > nb-card > nb-card-body > .size-medium')
-       .click()
-       .type('May 10, 2023')
-       cy.get(':nth-child(3) > nb-card > nb-card-body > .size-medium')
-       .click()
-       .type('Jun 18, 2023')
-       
-       })
-    
-})
+
 
 
